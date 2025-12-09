@@ -108,36 +108,19 @@
         .location-header.needs-improvement {
             border-left: 6px solid #ef4444;
         }
-        
-        /* 헤더 이미지 컨테이너 */
         .location-header-image {
     width: 100%;
-    aspect-ratio: 5 / 2;   /* ✅ 가로:세로 비율 (조금 여유 있는 헤더) */
+    height: 220px;
     object-fit: cover;
     object-position: center;
-    display: block;
 }
 
-/* 모바일에서는 살짝 더 세로 여유 */
 @media (max-width: 768px) {
     .location-header-image {
-        aspect-ratio: 4 / 3;
+        height: 160px;
     }
 }
 
-}
-
-    }
-}
-
-}
-
-        }
-        
-        .location-header-content {
-            padding: 30px;
-        }
-        
         .location-title {
             font-size: 28px;
             font-weight: bold;
