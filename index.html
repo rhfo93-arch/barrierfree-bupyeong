@@ -5,108 +5,296 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>고령자 접근성 지도</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#f5f5f5; }
-        .header { background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:#fff; padding:30px 20px; }
-        .header-content { max-width:1400px; margin:0 auto; }
-        .nav-tabs { background:#fff; position:sticky; top:0; z-index:100; box-shadow:0 2px 5px rgba(0,0,0,.1); }
-        .nav-tabs-content { max-width:1400px; margin:0 auto; display:flex; overflow-x:auto; padding:0 20px; }
-        .tab-button { padding:18px 25px; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; }
-        .tab-button.active { border-bottom-color:#667eea; font-weight:600; color:#667eea; }
-        .tab-content { display:none; max-width:1400px; margin:0 auto; padding:30px 20px; }
-        .tab-content.active { display:block; }
-        .location-header { background:#fff; border-radius:12px; margin-bottom:30px; box-shadow:0 2px 10px rgba(0,0,0,.1); }
-        .location-header.excellent { border-left:6px solid #10b981; }
-        .location-header-image { width:100%; height:300px; object-fit:cover; }
-        .location-header-content { padding:30px; }
-        .location-title { font-size:28px; font-weight:bold; margin-bottom:10px; }
-        .score-badge { padding:10px 20px; border-radius:20px; background:#d1fae5; color:#065f46; font-weight:bold; }
-        .summary-section, .barrier-card { background:#fff; border-radius:12px; padding:25px; margin-bottom:20px; box-shadow:0 2px 10px rgba(0,0,0,.1); }
-        .barriers-section-title { font-size:24px; font-weight:bold; margin:30px 0 20px; border-bottom:3px solid #ef4444; padding-bottom:10px; }
-        .barrier-number { display:inline-block; width:40px; height:40px; background:#ef4444; color:#fff; border-radius:50%; text-align:center; line-height:40px; font-weight:bold; margin-right:10px; }
-        .barrier-title { font-size:20px; font-weight:bold; }
-        .detail-label { font-weight:bold; margin-top:15px; }
-        .detail-content { color:#4b5563; margin-top:5px; }
-        .barrier-image { background:#f3f4f6; height:200px; display:flex; align-items:center; justify-content:center; border-radius:8px; margin:15px 0; }
-        .map-button { display:inline-block; padding:10px 20px; border-radius:8px; background:#3b82f6; color:#fff; text-decoration:none; font-size:14px; margin-top:15px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+        
+        .nav-tabs {
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-tabs-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            overflow-x: auto;
+            padding: 0 20px;
+        }
+        
+        .tab-button {
+            padding: 18px 25px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .tab-button:hover {
+            color: #667eea;
+            background: #f9fafb;
+        }
+        
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .location-header {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .location-header.excellent {
+            border-left: 6px solid #10b981;
+        }
+        
+        .location-header.good {
+            border-left: 6px solid #f59e0b;
+        }
+        
+        .location-header.needs-improvement {
+            border-left: 6px solid #ef4444;
+        }
+        
+        .location-header-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .location-header-content {
+            padding: 30px;
+        }
+        
+        .location-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+        
+        .location-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .score-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .score-excellent {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .score-good {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .score-needs {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .location-address {
+            font-size: 15px;
+            color: #6b7280;
+        }
+        
+        .summary-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .summary-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+        
+        .summary-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .summary-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f3f4f6;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+        
+        .summary-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .barriers-section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #ef4444;
+        }
+        
+        .barrier-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #ef4444;
+        }
+        
+        .barrier-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 15px;
+        }
+        
+        .barrier-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+        
+        .barrier-location {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+        
+        .barrier-image {
+            width: 100%;
+            max-width: 500px;
+            height: 250px;
+            border-radius: 8px;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        
+        .image-placeholder {
+            text-align: center;
+            color: #9ca3af;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            color: #374151;
+            margin: 15px 0 8px 0;
+            font-size: 15px;
+        }
+        
+        .detail-content {
+            color: #4b5563;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        .map-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .map-button:hover {
+            background: #2563eb;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            .location-header-image {
+                height: 200px;
+            }
+        }
     </style>
 </head>
 <body>
-
-<div class="header">
-    <div class="header-content">
-        <h1>🗺️ 고령자 접근성 온라인 지도</h1>
-        <p>액티브 시니어 봉사단 모니터링 결과</p>
-    </div>
-</div>
-
-<nav class="nav-tabs">
-    <div class="nav-tabs-content">
-        <button class="tab-button active" data-tab="sports">🏊 부평남부체육센터</button>
-    </div>
-</nav>
-
-<div id="sports" class="tab-content active">
-
-    <div class="location-header excellent">
-        <img class="location-header-image" src="https://via.placeholder.com/1200x300/10b981/ffffff?text=부평남부체육센터">
-        <div class="location-header-content">
-            <div class="location-title">🏊 부평남부체육센터</div>
-            <span class="score-badge">10점 / 10점 (우수)</span>
-        </div>
-    </div>
-
-    <div class="barriers-section-title">⚠️ 불편한 점 (배리어)</div>
-
-    <!-- 배리어 1 -->
-    <div class="barrier-card">
-        <div><span class="barrier-number">1</span><span class="barrier-title">안내데스크 위치</span></div>
-        <div class="detail-label">⚠️ 문제점</div>
-        <div class="detail-content">안내데스크가 지하 구석에 위치</div>
-    </div>
-
-    <!-- 배리어 2 ✅ Repov 반영 -->
-    <div class="barrier-card">
-        <div><span class="barrier-number">2</span><span class="barrier-title">공사로 인한 보도블록 굴곡</span></div>
-        <div class="barrier-image">📷</div>
-
-        <div class="detail-label">⚠️ 문제점</div>
-        <div class="detail-content">
-            공사로 인해 장애인 차도 보도블록이 굴곡져 있습니다.
-        </div>
-
-        <div class="detail-label">💡 개선 방안</div>
-        <div class="detail-content">
-            보도블록 평탄화 작업 필요
-        </div>
-
-        <a href="https://repov.me/ko/record?id=6107945"
-           target="_blank"
-           class="map-button"
-           style="background:#f59e0b; margin-right:10px;">
-            📱 Repov 기록 보기
-        </a>
-
-        <a href="https://naver.me/FcmAM2Kw"
-           target="_blank"
-           class="map-button">
-            🗺️ 네이버 지도 보기
-        </a>
-    </div>
-
-</div>
-
-<script>
-document.querySelectorAll('.tab-button').forEach(btn=>{
-    btn.onclick=()=>{
-        document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById(btn.dataset.tab).classList.add('active');
-        window.scrollTo({top:0});
-    };
-});
-</script>
-
-</body>
-</html>
+    <div class="header">
+        <div class="header-content">
+            <h1>🗺️ 고령자 접근성 온라인 지도</h1>
+            <p>액티브
