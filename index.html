@@ -291,7 +291,28 @@
                 height: 200px;
             }
         }
-        
+        .img-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+.img-grid img{
+  width:100%;
+  height:auto;
+  aspect-ratio:16/9;
+  object-fit:contain;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,0.12);
+  background:#fff;
+}
+.callout{
+  margin-top:18px;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,0.12);
+  background:rgba(0,0,0,0.03);
+  line-height:1.6;
+}
     </style>
 </head>
 <body>
@@ -1076,7 +1097,7 @@
             <li>서포터즈: 김주희 · 나혜원</li>
             <li>지원: 부평남부노인문화센터</li>
         </ul>
-    </div>
+    </div><!-- /supporters -->
 
     <!-- 노인인권 탭 내용 -->
 <div class="tab-content" id="rights">
