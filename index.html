@@ -69,12 +69,15 @@
     .header h1{ font-size:38px; margin-bottom:10px; letter-spacing:-1.5px; line-height:1.25; font-weight:300; font-family:'Noto Sans KR',-apple-system,sans-serif; cursor:pointer; transition:opacity 0.2s, transform 0.2s; user-select:none; display:inline-block; }
     .header h1:hover{ opacity:0.85; transform:translateY(-1px); }
     .header h1:active{ transform:translateY(0); opacity:0.75; }
-    .header h1::after{
-      content:'홈으로'; display:block; font-size:11px; font-weight:500; opacity:0;
-      color:#e0d5ff; margin-top:2px; letter-spacing:0.5px;
+    .header h1 .bold{ position:relative; }
+    .header h1 .bold::after{
+      content:'홈으로'; position:absolute; left:100%; bottom:6px; margin-left:12px;
+      font-size:12px; font-weight:500; opacity:0;
+      color:#e0d5ff; letter-spacing:0.5px; white-space:nowrap;
+      padding:3px 10px; border:1px solid rgba(224,213,255,0.4); border-radius:100px;
       transition:opacity 0.2s;
     }
-    .header h1:hover::after{ opacity:0.7; }
+    .header h1:hover .bold::after{ opacity:0.9; }
     .header h1 .thin{ font-weight:500; font-size:0.6em; opacity:0.9; display:block; margin-bottom:8px; letter-spacing:0.3px; color:#e0d5ff; }
     .header h1 .bold{ font-weight:900; font-size:1em; letter-spacing:-1.5px; word-break:keep-all; }
     .header h1 .bold .no-break{ white-space:nowrap; }
@@ -280,6 +283,20 @@
     .score-good{ background:#fef3c7; color:#92400e; }
     .score-needs{ background:#fee2e2; color:#991b1b; }
     .loc-address{ font-size:13.5px; color:#4b5563; }
+    .loc-contact{
+      display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;
+    }
+    .loc-contact a{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 12px; background:#fff; border:1px solid #d1d5db;
+      border-radius:100px; font-size:13px; font-weight:600;
+      color:#1f2937; text-decoration:none; transition:all 0.15s;
+    }
+    .loc-contact a:hover{ background:#f3f4f6; border-color:#667eea; color:#667eea; }
+    .loc-contact a.tel{ color:#059669; border-color:#a7f3d0; background:#f0fdf4; }
+    .loc-contact a.tel:hover{ background:#d1fae5; border-color:#10b981; color:#065f46; }
+    .loc-contact a.web{ color:#2563eb; border-color:#bfdbfe; background:#eff6ff; }
+    .loc-contact a.web:hover{ background:#dbeafe; border-color:#3b82f6; color:#1e40af; }
 
     .summary-section{ background:#fff; border-radius:10px; margin-bottom:20px; }
     .summary-title{ font-size:17px; font-weight:700; margin-bottom:12px; }
@@ -492,15 +509,15 @@
         <div class="map-inner" id="mapInner">
         <img class="map-bg" src="./map-background.jpg" alt="부평구 지도 - 부평역, 백운역, 굴포천, 부평공원, 아트센터 등이 표시되어 있음" fetchpriority="high" decoding="async">
     <button class="map-marker marker-needs" style="left:53.74%; top:68.97%;" data-loc="station" aria-label="부평역">
-      <span class="marker-num">1</span>
+      <span class="marker-num">2</span>
       <span class="marker-label">부평역</span>
     </button>
     <button class="map-marker marker-needs" style="left:56.1%; top:74.74%;" data-loc="road" aria-label="부평역↔센터 보행로">
-      <span class="marker-num">2</span>
+      <span class="marker-num">3</span>
       <span class="marker-label">부평역↔센터 보행로</span>
     </button>
     <button class="map-marker marker-excellent" style="left:58.46%; top:80.51%;" data-loc="center" aria-label="부평남부노인문화센터">
-      <span class="marker-num">3</span>
+      <span class="marker-num">1</span>
       <span class="marker-label">부평남부노인문화센터</span>
     </button>
     <button class="map-marker marker-needs" style="left:61.03%; top:81.41%;" data-loc="park" aria-label="만월공원(달빛어린이공원)">
@@ -560,20 +577,20 @@
         <div class="gd"><i style="background:#ef4444"></i>개선필요(0~4점)</div>
       </div>
       <ul class="legend-list">
+      <li><button class="legend-item" data-loc="center">
+        <span class="legend-num" style="background:#10b981">1</span>
+        <span class="legend-label">부평남부노인문화센터</span>
+        <span class="legend-score score-excellent">10점 / 10점</span>
+      </button></li>
       <li><button class="legend-item" data-loc="station">
-        <span class="legend-num" style="background:#ef4444">1</span>
+        <span class="legend-num" style="background:#ef4444">2</span>
         <span class="legend-label">부평역</span>
         <span class="legend-score score-needs">4점 / 10점</span>
       </button></li>
       <li><button class="legend-item" data-loc="road">
-        <span class="legend-num" style="background:#ef4444">2</span>
+        <span class="legend-num" style="background:#ef4444">3</span>
         <span class="legend-label">부평역↔센터 보행로</span>
         <span class="legend-score score-needs">3점 / 10점</span>
-      </button></li>
-      <li><button class="legend-item" data-loc="center">
-        <span class="legend-num" style="background:#10b981">3</span>
-        <span class="legend-label">부평남부노인문화센터</span>
-        <span class="legend-score score-excellent">10점 / 10점</span>
       </button></li>
       <li><button class="legend-item" data-loc="park">
         <span class="legend-num" style="background:#ef4444">4</span>
@@ -628,7 +645,7 @@
     <section class="loc-panel" id="panel-station" hidden>
       <div class="loc-header needs">
         <div class="loc-title-row">
-          <span class="loc-num">1</span>
+          <span class="loc-num">2</span>
           <div>
             <div class="loc-title">부평역</div>
             <div class="loc-sub">전철역</div>
@@ -691,7 +708,7 @@
     <section class="loc-panel" id="panel-road" hidden>
       <div class="loc-header needs">
         <div class="loc-title-row">
-          <span class="loc-num">2</span>
+          <span class="loc-num">3</span>
           <div>
             <div class="loc-title">부평역↔센터 보행로</div>
             <div class="loc-sub">도로</div>
@@ -754,7 +771,7 @@
     <section class="loc-panel" id="panel-center" hidden>
       <div class="loc-header excellent">
         <div class="loc-title-row">
-          <span class="loc-num">3</span>
+          <span class="loc-num">1</span>
           <div>
             <div class="loc-title">부평남부노인문화센터</div>
             <div class="loc-sub">공공시설</div>
@@ -763,6 +780,10 @@
         <div class="loc-info">
           <div class="score-badge score-excellent">10점 / 10점</div>
           <div class="loc-address">📍 인천광역시 부평구 동수로 68</div>
+          <div class="loc-contact">
+            <a href="https://www.bpnsw.or.kr" target="_blank" rel="noopener" class="web">🌐 www.bpnsw.or.kr</a>
+            <a href="tel:032-525-5560" class="tel">📞 032-525-5560</a>
+          </div>
         </div>
       </div>
       <div class="summary-section">
@@ -889,6 +910,10 @@
         <div class="loc-info">
           <div class="score-badge score-excellent">10점 / 10점</div>
           <div class="loc-address">📍 인천광역시 부평구 남부체육센터로 40</div>
+          <div class="loc-contact">
+            <a href="https://nbsc.bpss.or.kr" target="_blank" rel="noopener" class="web">🌐 nbsc.bpss.or.kr</a>
+            <a href="tel:032-528-7505" class="tel">📞 032-528-7505</a>
+          </div>
         </div>
       </div>
       <div class="summary-section">
@@ -1048,6 +1073,10 @@
         <div class="loc-info">
           <div class="score-badge score-excellent">10점 / 10점</div>
           <div class="loc-address">📍 인천광역시 부평구 아트센터로 166</div>
+          <div class="loc-contact">
+            <a href="https://www.bpcf.or.kr" target="_blank" rel="noopener" class="web">🌐 www.bpcf.or.kr</a>
+            <a href="tel:032-500-2000" class="tel">📞 032-500-2000</a>
+          </div>
         </div>
       </div>
       <div class="summary-section">
@@ -1453,9 +1482,13 @@ if (titleH1) {
     const mapTab = document.querySelector('.tab-button[data-tab="map"]');
     if (mapTab && !mapTab.classList.contains('active')) {
       mapTab.click();
-    } else {
-      window.scrollTo({top: 0, behavior: 'smooth'});
     }
+    // Scroll to top
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    // Open center (부평남부노인문화센터 = #1) panel after brief delay
+    setTimeout(() => {
+      if (typeof openPanel === 'function') openPanel('center', true);
+    }, 350);
   };
   titleH1.addEventListener('click', goHome);
   titleH1.addEventListener('keydown', (e) => {
