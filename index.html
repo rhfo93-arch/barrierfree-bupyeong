@@ -18,6 +18,9 @@
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#667eea" />
   <link rel="canonical" href="https://buly.kr" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700;900&display=swap" rel="stylesheet">
   <title>시니어 이음맵 (Senior Ieum Map) - 천천히 걸어도 안전한 길, 고령자 접근성 지도 | 부평남부노인문화센터</title>
   <script type="application/ld+json">
   {
@@ -62,28 +65,45 @@
   </script>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Pretendard','Malgun Gothic',sans-serif; background:#f5f5f5; color:#1f2937; }
+    body { font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,'Segoe UI','Pretendard','Malgun Gothic',sans-serif; background:#f5f5f5; color:#1f2937; }
+    .header h1{ font-size:38px; margin-bottom:10px; letter-spacing:-1.5px; line-height:1.25; font-weight:300; font-family:'Noto Sans KR',-apple-system,sans-serif; }
+    .header h1 .thin{ font-weight:500; font-size:0.6em; opacity:0.9; display:block; margin-bottom:8px; letter-spacing:0.3px; color:#e0d5ff; }
+    .header h1 .bold{ font-weight:900; font-size:1em; letter-spacing:-1.5px; }
 
     .header{
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color:#fff; padding:26px 20px; box-shadow:0 2px 10px rgba(0,0,0,0.1);
     }
     .header-content{ max-width:1400px; margin:0 auto; }
-    .header h1{ font-size:36px; margin-bottom:10px; letter-spacing:-0.5px; line-height:1.3; font-weight:300; }
-    .header h1 .thin{ font-weight:500; font-size:0.7em; opacity:1; display:block; margin-bottom:6px; letter-spacing:0.5px; }
-    .header h1 .bold{ font-weight:900; font-size:1em; letter-spacing:-1px; }
     .header h1 .eng{ font-weight:500; font-size:0.5em; opacity:0.75; letter-spacing:0.3px; margin-left:6px; vertical-align:middle; }
     .header p{ font-size:15px; opacity:0.95; }
     .header .credits{ font-size:12.5px; margin-top:8px; opacity:0.85; }
 
     .nav-tabs{ background:#fff; box-shadow:0 2px 5px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; }
-    .nav-tabs-content{ max-width:1400px; margin:0 auto; display:flex; overflow-x:auto; padding:0 20px; }
+    .nav-tabs-content{ max-width:1400px; margin:0 auto; display:flex; overflow-x:auto; padding:0 20px; scroll-behavior:smooth; }
+    .nav-tabs-content::-webkit-scrollbar{ display:none; }
     .tab-button{
-      padding:16px 22px; background:none; border:none; border-bottom:3px solid transparent;
-      cursor:pointer; font-size:15px; font-weight:500; color:#6b7280; transition:all 0.2s; white-space:nowrap;
+      padding:16px 22px; background:none; border:none; border-bottom:4px solid transparent;
+      cursor:pointer; font-size:15px; font-weight:600; color:#4b5563; transition:all 0.2s; white-space:nowrap;
+      display:inline-flex; align-items:center; gap:10px; position:relative;
     }
-    .tab-button:hover{ color:#667eea; background:#f9fafb; }
-    .tab-button.active{ color:#667eea; border-bottom-color:#667eea; font-weight:600; }
+    .tab-color{
+      display:inline-block; width:10px; height:10px; border-radius:50%; flex:0 0 auto;
+      transition:transform 0.2s, box-shadow 0.2s;
+    }
+    .tab-button[data-tab="map"] .tab-color        { background:#667eea; }
+    .tab-button[data-tab="supporters"] .tab-color { background:#10b981; }
+    .tab-button[data-tab="rights"] .tab-color     { background:#f59e0b; }
+    .tab-button[data-tab="abuse"] .tab-color      { background:#ef4444; }
+
+    .tab-button:hover{ color:#111827; background:#f3f4f6; }
+    .tab-button:hover .tab-color{ transform:scale(1.4); box-shadow:0 0 0 4px rgba(102,126,234,0.15); }
+    .tab-button.active{ color:#111827; font-weight:800; background:#f9fafb; }
+    .tab-button[data-tab="map"].active        { border-bottom-color:#667eea; }
+    .tab-button[data-tab="supporters"].active { border-bottom-color:#10b981; }
+    .tab-button[data-tab="rights"].active     { border-bottom-color:#f59e0b; }
+    .tab-button[data-tab="abuse"].active      { border-bottom-color:#ef4444; }
+    .tab-button.active .tab-color{ transform:scale(1.3); }
 
     .tab-content{ display:none; max-width:1400px; margin:0 auto; padding:24px 20px; }
     .tab-content.active{ display:block; }
@@ -325,8 +345,29 @@
 
     /* ===== supporters/rights/abuse tabs ===== */
     .info-card{ background:#fff; border-radius:12px; padding:24px; margin-bottom:20px; box-shadow:0 2px 10px rgba(0,0,0,0.06); }
-    .info-card h2{ font-size:24px; margin-bottom:14px; color:#1f2937; }
-    .info-card h3{ font-size:17px; margin:16px 0 10px; color:#1f2937; }
+    .info-card h2{
+      font-size:24px; margin-bottom:18px; color:#1f2937;
+      padding-left:16px; position:relative; font-weight:800;
+    }
+    .info-card h2::before{
+      content:''; position:absolute; left:0; top:6px; bottom:6px; width:6px;
+      background:#667eea; border-radius:3px;
+    }
+    .info-card h3{
+      font-size:17px; margin:22px 0 10px; color:#1f2937;
+      padding-left:14px; position:relative; font-weight:700;
+    }
+    .info-card h3::before{
+      content:''; position:absolute; left:0; top:4px; bottom:4px; width:4px;
+      background:#10b981; border-radius:2px;
+    }
+    /* Tab-specific h2/h3 colors */
+    #supporters .info-card h2::before,
+    #supporters .info-card h3::before{ background:#10b981; }
+    #rights .info-card h2::before,
+    #rights .info-card h3::before{ background:#f59e0b; }
+    #abuse .info-card h2::before,
+    #abuse .info-card h3::before{ background:#ef4444; }
     .info-card ul{ padding-left:20px; line-height:1.8; color:#4b5563; }
     .info-card ul li{ margin-bottom:4px; }
 
@@ -410,7 +451,7 @@
   <div class="header-content">
     <h1>
       <span class="thin">천천히 걸어도 안전한 길</span>
-      <span class="bold">🗺️ 고령자 접근성 지도 : 시니어 이음맵</span>
+      <span class="bold">고령자 접근성 지도 : 시니어 이음맵</span>
     </h1>
     <p>부평남부노인문화센터 액티브 시니어 노인권익증진캠페인(2025. 10.~2026. 7.)</p>
     <p class="credits">
@@ -422,10 +463,10 @@
 
 <nav class="nav-tabs" role="tablist" aria-label="페이지 탭">
   <div class="nav-tabs-content">
-    <button class="tab-button active" data-tab="map" role="tab" aria-selected="true" aria-controls="map">🗺️ 접근성 지도</button>
-    <button class="tab-button" data-tab="supporters" role="tab" aria-selected="false" aria-controls="supporters">🤝 액티브 시니어 봉사단</button>
-    <button class="tab-button" data-tab="rights" role="tab" aria-selected="false" aria-controls="rights">🧓 노인인권</button>
-    <button class="tab-button" data-tab="abuse" role="tab" aria-selected="false" aria-controls="abuse">🚨 노인학대예방</button>
+    <button class="tab-button active" data-tab="map" role="tab" aria-selected="true" aria-controls="map"><span class="tab-color"></span>접근성 지도</button>
+    <button class="tab-button" data-tab="supporters" role="tab" aria-selected="false" aria-controls="supporters"><span class="tab-color"></span>액티브 시니어 봉사단</button>
+    <button class="tab-button" data-tab="rights" role="tab" aria-selected="false" aria-controls="rights"><span class="tab-color"></span>노인인권</button>
+    <button class="tab-button" data-tab="abuse" role="tab" aria-selected="false" aria-controls="abuse"><span class="tab-color"></span>노인학대예방</button>
   </div>
 </nav>
 
@@ -1266,14 +1307,14 @@
 <!-- ================= SUPPORTERS TAB ================= -->
 <div id="supporters" class="tab-content">
   <div class="info-card">
-    <h2>🤝 액티브 시니어 봉사단 소개</h2>
-    <h3>📌 봉사단은 무엇을 하나요?</h3>
+    <h2>액티브 시니어 봉사단 소개</h2>
+    <h3>봉사단은 무엇을 하나요?</h3>
     <ul>
       <li>스마트폰을 활용하여 고령자 지역 생활환경의 접근성과 안전성을 직접 점검합니다.</li>
       <li>보행로, 공공시설, 공원, 역사 등 일상 공간을 모니터링합니다.</li>
       <li>현장 기록을 바탕으로 주민참여예산 및 행정 제안을 진행합니다.</li>
     </ul>
-    <h3>👥 참여 회원</h3>
+    <h3>참여 회원</h3>
     <ul>
       <li>곽순영, 김영호, 김문헌, 남상봉, 변춘희, 송금자, 유연훈, 유상섭, 조문순, 정영이</li>
     </ul>
@@ -1284,7 +1325,7 @@
       <img src="./교육4.jpg" alt="교육 활동 4" loading="lazy">
     </div>
     <p class="gallery-hint">(썸네일 클릭 → 확대 / 확대 화면에서 화살표 또는 이미지 클릭으로 다음)</p>
-    <h3>🗂️ 활동과정</h3>
+    <h3>활동과정</h3>
     <ul>
       <li><strong>오리엔테이션</strong> – 봉사단 활동 취지 이해 및 역할 공유</li>
       <li><strong>권익증진교육</strong> – 노인인권교육, 노인학대예방교육</li>
@@ -1301,14 +1342,14 @@
       <img src="./소개3.jpg" alt="봉사단 소개 3" loading="lazy">
       <img src="./소개4.jpg" alt="봉사단 소개 4" loading="lazy">
     </div>
-    <h3>🌱 활동의 의미</h3>
+    <h3>활동의 의미</h3>
     <ul>
       <li>학습한 기술을 바탕으로 고령자를 보호 대상이 아닌 지역 변화의 주체로 전환</li>
       <li>고령자 경험 기반 실효성 있는 정책 제안</li>
       <li>작은 개선을 통한 고령자 친화 환경 조성 및 노인 권익 증진 도모</li>
       <li>노인권익증진(노인학대예방, 노인인권) 의식 향상 및 지역사회 확산</li>
     </ul>
-    <h3>🤍 함께한 분들</h3>
+    <h3>함께한 분들</h3>
     <ul>
       <li>서포터즈: 김주희 · 곽민서 · 나혜원</li>
       <li>담당자: 부평남부노인문화센터 장승훈</li>
@@ -1325,7 +1366,7 @@
 <!-- ================= RIGHTS TAB ================= -->
 <div id="rights" class="tab-content">
   <div class="info-card">
-    <h2>🧓 노인인권 교육</h2>
+    <h2>노인인권 교육</h2>
     <p class="desc">액티브시니어 봉사단 노인인권 자료입니다. (썸네일 클릭 → 확대 / 확대 화면에서 화살표 또는 이미지 클릭으로 다음)</p>
     <div class="img-grid">
       <img src="./right(1).jpg" alt="노인인권 교육자료 1" loading="lazy">
@@ -1347,7 +1388,7 @@
 <!-- ================= ABUSE TAB ================= -->
 <div id="abuse" class="tab-content">
   <div class="info-card">
-    <h2>🚨 노인학대 예방 교육</h2>
+    <h2>노인학대 예방 교육</h2>
     <p class="desc">노인학대 유형·징후·대응 및 신고 안내 자료입니다.</p>
     <div class="img-grid">
       <img src="./Prevention(1).jpg" alt="노인학대 예방 교육자료 1" loading="lazy">
@@ -1404,6 +1445,16 @@ document.querySelectorAll('.tab-button').forEach(btn => {
     btn.classList.add('active');
     btn.setAttribute('aria-selected', 'true');
     window.scrollTo({top:0, behavior:'smooth'});
+
+    // Center the clicked tab in the tab bar (especially useful on mobile)
+    const tabBar = document.querySelector('.nav-tabs-content');
+    if (tabBar) {
+      const btnRect = btn.getBoundingClientRect();
+      const barRect = tabBar.getBoundingClientRect();
+      const btnCenter = btn.offsetLeft + btn.offsetWidth / 2;
+      const targetScroll = btnCenter - tabBar.clientWidth / 2;
+      tabBar.scrollTo({ left: Math.max(0, targetScroll), behavior: 'smooth' });
+    }
   });
 });
 
