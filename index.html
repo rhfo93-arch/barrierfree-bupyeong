@@ -84,30 +84,10 @@
 
     .header{
       background: #1e3a5f;
-      color:#fff; padding:24px 20px; box-shadow:0 2px 10px rgba(0,0,0,0.08);
+      color:#fff; padding:24px 0; box-shadow:0 2px 10px rgba(0,0,0,0.08);
       border-bottom: 3px solid #fbbf24;
     }
-    .header-content{ max-width:1400px; margin:0 auto; display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:center; }
-    .header-logo{
-      flex:0 0 auto;
-      width:78px; height:78px; border-radius:8px; overflow:hidden;
-      background:#fff; padding:6px;
-      display:flex; align-items:center; justify-content:center;
-      box-shadow:0 2px 6px rgba(0,0,0,0.15);
-    }
-    .header-logo img{
-      width:100%; height:100%; object-fit:contain; display:block;
-    }
-    .header-logo .logo-placeholder{
-      width:100%; height:100%; display:flex; align-items:center; justify-content:center;
-      background:#f3f4f6; border-radius:6px;
-      font-size:10px; font-weight:700; color:#6b7280; text-align:center; line-height:1.2;
-    }
-    .header-text{ min-width:0; }
-    @media (max-width: 700px){
-      .header-content{ grid-template-columns:auto 1fr; gap:14px; }
-      .header-logo{ width:56px; height:56px; padding:4px; }
-    }
+    .header-content{ max-width:1400px; margin:0 auto; padding:0 20px; }
     .header h1 .eng{ font-weight:500; font-size:0.5em; opacity:0.75; letter-spacing:0.3px; margin-left:6px; vertical-align:middle; }
     .header p{ font-size:15px; opacity:0.95; }
     .header .credits{ font-size:12.5px; margin-top:8px; opacity:0.85; }
@@ -431,6 +411,23 @@
     /* Extra breathing room for image grids in supporters tab */
     #supporters .img-grid{ margin-top:calc(18px + 10pt); margin-bottom:calc(10pt + 8px); }
     #supporters .img-grid + .gallery-hint{ margin-top:-10pt; margin-bottom:calc(10pt + 8px); }
+    /* Center logo block in supporters tab */
+    .center-logo-block{
+      display:flex; flex-direction:column; align-items:center;
+      padding:32px 20px; margin:24px 0;
+      background:#f9fafb; border-radius:10px; border:1px solid #e5e7eb;
+    }
+    .center-logo-block img{
+      max-width:280px; width:100%; height:auto;
+      margin-bottom:14px;
+    }
+    .center-logo-caption{
+      font-size:14px; font-weight:600; color:#4b5563; letter-spacing:0.3px;
+    }
+    @media (max-width: 700px){
+      .center-logo-block{ padding:24px 16px; }
+      .center-logo-block img{ max-width:220px; }
+    }
     .gallery-hint{
       font-size:12px; color:#6b7280; margin-top:8px; text-align:center;
       font-style:italic;
@@ -497,11 +494,6 @@
 
 <div class="header">
   <div class="header-content">
-    <a href="#" class="header-logo" aria-label="부평남부노인문화센터 홈으로" onclick="event.preventDefault(); document.querySelector('.header h1').click();">
-      <img src="./logo.png" alt="부평남부노인문화센터" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="logo-placeholder" style="display:none;">부평남부<br>노인문화센터</div>
-    </a>
-    <div class="header-text">
     <h1>
       <span class="thin">천천히 걸어도 안전한 길</span>
       <span class="bold">고령자 접근성 지도 : <span class="no-break">시니어 이음맵</span></span>
@@ -511,7 +503,6 @@
       참여자 : 곽순영, 김영호, 김문헌, 남상봉, 변춘희, 송금자, 유연훈, 유상섭, 조문순, 정영이 |
       서포터즈 : 김주희, 곽민서, 나혜원
     </p>
-    </div>
   </div>
 </div>
 
@@ -1420,6 +1411,10 @@
       <li>서포터즈: 김주희 · 곽민서 · 나혜원</li>
       <li>담당자: 부평남부노인문화센터 장승훈</li>
     </ul>
+    <div class="center-logo-block">
+      <img src="./logo.png" alt="부평남부노인문화센터" onerror="this.parentElement.style.display='none';">
+      <div class="center-logo-caption">주최 · 부평남부노인문화센터</div>
+    </div>
     <div class="img-grid">
       <img src="./활동1.jpg" alt="봉사단 활동 1" loading="lazy">
       <img src="./활동2.jpg" alt="봉사단 활동 2" loading="lazy">
@@ -1505,17 +1500,24 @@ if (titleH1) {
   titleH1.setAttribute('aria-label', '홈으로 - 접근성 지도 탭으로 이동');
   titleH1.setAttribute('tabindex', '0');
   const goHome = () => {
+    // Close any open detail panel
+    if (typeof closeCurrentPanel === 'function') closeCurrentPanel();
     // Activate map tab
     const mapTab = document.querySelector('.tab-button[data-tab="map"]');
     if (mapTab && !mapTab.classList.contains('active')) {
       mapTab.click();
     }
+    // Reset map zoom/pan if applicable
+    if (typeof zoomLevel !== 'undefined' && zoomLevel > 1) {
+      zoomLevel = 1;
+      panX = 0;
+      panY = 0;
+      if (typeof applyTransform === 'function') applyTransform();
+    }
+    // Close mobile sheet if open
+    if (typeof closeMobileSheet === 'function') closeMobileSheet();
     // Scroll to top
     window.scrollTo({top: 0, behavior: 'smooth'});
-    // Open center (부평남부노인문화센터 = #1) panel after brief delay
-    setTimeout(() => {
-      if (typeof openPanel === 'function') openPanel('center', true);
-    }, 350);
   };
   titleH1.addEventListener('click', goHome);
   titleH1.addEventListener('keydown', (e) => {
