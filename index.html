@@ -16,7 +16,7 @@
   <meta name="twitter:description" content="부평구 12개 지점의 고령자·교통약자 접근성 현장 조사 결과" />
   <meta name="author" content="부평남부노인문화센터 액티브 시니어 봉사단" />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#667eea" />
+  <meta name="theme-color" content="#1e3a5f" />
   <link rel="canonical" href="https://buly.kr" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,20 +73,41 @@
     .header h1 .bold::after{
       content:'홈으로'; position:absolute; left:100%; bottom:6px; margin-left:12px;
       font-size:12px; font-weight:500; opacity:0;
-      color:#e0d5ff; letter-spacing:0.5px; white-space:nowrap;
-      padding:3px 10px; border:1px solid rgba(224,213,255,0.4); border-radius:100px;
+      color:#fbbf24; letter-spacing:0.5px; white-space:nowrap;
+      padding:3px 10px; border:1px solid rgba(251,191,36,0.5); border-radius:100px;
       transition:opacity 0.2s;
     }
     .header h1:hover .bold::after{ opacity:0.9; }
-    .header h1 .thin{ font-weight:500; font-size:0.6em; opacity:0.9; display:block; margin-bottom:8px; letter-spacing:0.3px; color:#e0d5ff; }
+    .header h1 .thin{ font-weight:500; font-size:0.6em; opacity:1; display:block; margin-bottom:8px; letter-spacing:0.3px; color:#fbbf24; }
     .header h1 .bold{ font-weight:900; font-size:1em; letter-spacing:-1.5px; word-break:keep-all; }
     .header h1 .bold .no-break{ white-space:nowrap; }
 
     .header{
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color:#fff; padding:26px 20px; box-shadow:0 2px 10px rgba(0,0,0,0.1);
+      background: #1e3a5f;
+      color:#fff; padding:24px 20px; box-shadow:0 2px 10px rgba(0,0,0,0.08);
+      border-bottom: 3px solid #fbbf24;
     }
-    .header-content{ max-width:1400px; margin:0 auto; }
+    .header-content{ max-width:1400px; margin:0 auto; display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:center; }
+    .header-logo{
+      flex:0 0 auto;
+      width:78px; height:78px; border-radius:8px; overflow:hidden;
+      background:#fff; padding:6px;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 2px 6px rgba(0,0,0,0.15);
+    }
+    .header-logo img{
+      width:100%; height:100%; object-fit:contain; display:block;
+    }
+    .header-logo .logo-placeholder{
+      width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+      background:#f3f4f6; border-radius:6px;
+      font-size:10px; font-weight:700; color:#6b7280; text-align:center; line-height:1.2;
+    }
+    .header-text{ min-width:0; }
+    @media (max-width: 700px){
+      .header-content{ grid-template-columns:auto 1fr; gap:14px; }
+      .header-logo{ width:56px; height:56px; padding:4px; }
+    }
     .header h1 .eng{ font-weight:500; font-size:0.5em; opacity:0.75; letter-spacing:0.3px; margin-left:6px; vertical-align:middle; }
     .header p{ font-size:15px; opacity:0.95; }
     .header .credits{ font-size:12.5px; margin-top:8px; opacity:0.85; }
@@ -476,6 +497,11 @@
 
 <div class="header">
   <div class="header-content">
+    <a href="#" class="header-logo" aria-label="부평남부노인문화센터 홈으로" onclick="event.preventDefault(); document.querySelector('.header h1').click();">
+      <img src="./logo.png" alt="부평남부노인문화센터" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="logo-placeholder" style="display:none;">부평남부<br>노인문화센터</div>
+    </a>
+    <div class="header-text">
     <h1>
       <span class="thin">천천히 걸어도 안전한 길</span>
       <span class="bold">고령자 접근성 지도 : <span class="no-break">시니어 이음맵</span></span>
@@ -485,6 +511,7 @@
       참여자 : 곽순영, 김영호, 김문헌, 남상봉, 변춘희, 송금자, 유연훈, 유상섭, 조문순, 정영이 |
       서포터즈 : 김주희, 곽민서, 나혜원
     </p>
+    </div>
   </div>
 </div>
 
