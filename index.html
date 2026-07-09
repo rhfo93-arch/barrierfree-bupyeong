@@ -411,22 +411,19 @@
     /* Extra breathing room for image grids in supporters tab */
     #supporters .img-grid{ margin-top:calc(18px + 10pt); margin-bottom:calc(10pt + 8px); }
     #supporters .img-grid + .gallery-hint{ margin-top:-10pt; margin-bottom:calc(10pt + 8px); }
-    /* Center logo block in supporters tab */
-    .center-logo-block{
-      display:flex; flex-direction:column; align-items:center;
-      padding:32px 20px; margin:24px 0;
-      background:#f9fafb; border-radius:10px; border:1px solid #e5e7eb;
+    /* Site footer logo (appears on every tab) */
+    .site-footer{
+      max-width:1400px; margin:40px auto 20px;
+      padding:24px 20px; text-align:center;
+      border-top:1px solid #e5e7eb;
     }
-    .center-logo-block img{
-      max-width:280px; width:100%; height:auto;
-      margin-bottom:14px;
-    }
-    .center-logo-caption{
-      font-size:14px; font-weight:600; color:#4b5563; letter-spacing:0.3px;
+    .site-footer img{
+      max-width:224px; width:100%; height:auto;
+      display:inline-block; opacity:0.85;
     }
     @media (max-width: 700px){
-      .center-logo-block{ padding:24px 16px; }
-      .center-logo-block img{ max-width:220px; }
+      .site-footer{ margin-top:28px; padding:20px 16px; }
+      .site-footer img{ max-width:176px; }
     }
     .gallery-hint{
       font-size:12px; color:#6b7280; margin-top:8px; text-align:center;
@@ -1359,6 +1356,10 @@
       </div>
     </section>
   </div>
+
+  <footer class="site-footer">
+    <img src="./logo.png" alt="부평남부노인문화센터" onerror="this.style.display='none';">
+  </footer>
 </div>
 
 <!-- ================= SUPPORTERS TAB ================= -->
@@ -1411,10 +1412,6 @@
       <li>서포터즈: 김주희 · 곽민서 · 나혜원</li>
       <li>담당자: 부평남부노인문화센터 장승훈</li>
     </ul>
-    <div class="center-logo-block">
-      <img src="./logo.png" alt="부평남부노인문화센터" onerror="this.parentElement.style.display='none';">
-      <div class="center-logo-caption">주최 · 부평남부노인문화센터</div>
-    </div>
     <div class="img-grid">
       <img src="./활동1.jpg" alt="봉사단 활동 1" loading="lazy">
       <img src="./활동2.jpg" alt="봉사단 활동 2" loading="lazy">
@@ -1422,6 +1419,10 @@
       <img src="./활동4.jpg" alt="봉사단 활동 4" loading="lazy">
     </div>
   </div>
+
+  <footer class="site-footer">
+    <img src="./logo.png" alt="부평남부노인문화센터" onerror="this.style.display='none';">
+  </footer>
 </div>
 
 <!-- ================= RIGHTS TAB ================= -->
@@ -1444,6 +1445,10 @@
       <img src="./right(12).jpg" alt="노인인권 교육자료 12" loading="lazy">
     </div>
   </div>
+
+  <footer class="site-footer">
+    <img src="./logo.png" alt="부평남부노인문화센터" onerror="this.style.display='none';">
+  </footer>
 </div>
 
 <!-- ================= ABUSE TAB ================= -->
@@ -1477,6 +1482,10 @@
     <button class="lightbox-nav next" id="lightboxNext" aria-label="다음">›</button>
     <div id="lightboxCaption" class="lightbox-caption"></div>
   </div>
+
+  <footer class="site-footer">
+    <img src="./logo.png" alt="부평남부노인문화센터" onerror="this.style.display='none';">
+  </footer>
 </div>
 
 <!-- Scroll to top button -->
