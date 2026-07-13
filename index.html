@@ -446,6 +446,27 @@
     .site-footer .footer-info a:hover{
       color:#1e3a5f; text-decoration:underline;
     }
+    .site-footer .visitor-count{
+      flex:0 0 auto; text-align:right; padding-left:16px;
+      border-left:1px solid #e5e7eb; margin-left:8px;
+    }
+    .site-footer .visitor-count .vc-label{
+      font-size:11px; color:#6b7280; font-weight:500; letter-spacing:0.3px;
+      display:block; margin-bottom:2px;
+    }
+    .site-footer .visitor-count .vc-num{
+      font-size:18px; font-weight:800; color:#1e3a5f; letter-spacing:-0.5px;
+    }
+    .site-footer .visitor-count .vc-unit{
+      font-size:11px; color:#6b7280; font-weight:500; margin-left:2px;
+    }
+    @media (max-width: 900px){
+      .site-footer .visitor-count{
+        border-left:none; border-top:1px solid #e5e7eb;
+        padding-left:0; padding-top:10px; margin-left:0; margin-top:6px;
+        width:100%; text-align:left;
+      }
+    }
     @media (max-width: 900px){
       .site-footer{ flex-wrap:wrap; gap:14px; }
       .site-footer .footer-info{
@@ -1396,6 +1417,10 @@
     <div class="footer-info">
       <span class="footer-name">부평남부노인문화센터</span><span class="footer-item">우)21431, 인천광역시 부평구 동수로 68</span><span class="footer-item">TEL. <a href="tel:032-525-5560" onclick="event.stopPropagation();">032-525-5560</a></span><span class="footer-item">FAX. 032-525-5561</span><span class="footer-item">E-Mail. <a href="mailto:bpnsw@naver.com" onclick="event.stopPropagation();">bpnsw@naver.com</a></span>
     </div>
+    <div class="visitor-count">
+      <span class="vc-label">누적 방문자</span>
+      <span id="site_uv" class="vc-num">-</span><span class="vc-unit">명</span>
+    </div>
   </footer>
 </div>
 
@@ -1464,6 +1489,10 @@
     <div class="footer-info">
       <span class="footer-name">부평남부노인문화센터</span><span class="footer-item">우)21431, 인천광역시 부평구 동수로 68</span><span class="footer-item">TEL. <a href="tel:032-525-5560" onclick="event.stopPropagation();">032-525-5560</a></span><span class="footer-item">FAX. 032-525-5561</span><span class="footer-item">E-Mail. <a href="mailto:bpnsw@naver.com" onclick="event.stopPropagation();">bpnsw@naver.com</a></span>
     </div>
+    <div class="visitor-count">
+      <span class="vc-label">누적 방문자</span>
+      <span id="site_uv" class="vc-num">-</span><span class="vc-unit">명</span>
+    </div>
   </footer>
 </div>
 
@@ -1494,6 +1523,10 @@
     </div>
     <div class="footer-info">
       <span class="footer-name">부평남부노인문화센터</span><span class="footer-item">우)21431, 인천광역시 부평구 동수로 68</span><span class="footer-item">TEL. <a href="tel:032-525-5560" onclick="event.stopPropagation();">032-525-5560</a></span><span class="footer-item">FAX. 032-525-5561</span><span class="footer-item">E-Mail. <a href="mailto:bpnsw@naver.com" onclick="event.stopPropagation();">bpnsw@naver.com</a></span>
+    </div>
+    <div class="visitor-count">
+      <span class="vc-label">누적 방문자</span>
+      <span id="site_uv" class="vc-num">-</span><span class="vc-unit">명</span>
     </div>
   </footer>
 </div>
@@ -1536,6 +1569,10 @@
     </div>
     <div class="footer-info">
       <span class="footer-name">부평남부노인문화센터</span><span class="footer-item">우)21431, 인천광역시 부평구 동수로 68</span><span class="footer-item">TEL. <a href="tel:032-525-5560" onclick="event.stopPropagation();">032-525-5560</a></span><span class="footer-item">FAX. 032-525-5561</span><span class="footer-item">E-Mail. <a href="mailto:bpnsw@naver.com" onclick="event.stopPropagation();">bpnsw@naver.com</a></span>
+    </div>
+    <div class="visitor-count">
+      <span class="vc-label">누적 방문자</span>
+      <span id="site_uv" class="vc-num">-</span><span class="vc-unit">명</span>
     </div>
   </footer>
 </div>
@@ -1885,5 +1922,6 @@ document.addEventListener('keydown', e => {
 });
 buildGallery();
 </script>
+<script defer src="https://cn.vercount.one/js"></script>
 </body>
 </html>
