@@ -552,7 +552,7 @@
   <div class="header-content">
     <div class="visitor-badge">
       <span class="vb-label">누적</span>
-      <span id="visitorCount" class="vb-num">-</span><span class="vb-unit">명</span>
+      <span id="vercount_value_site_uv" class="vb-num">···</span><span class="vb-unit">명</span>
     </div>
     <h1>
       <span class="thin">천천히 걸어도 안전한 길</span>
@@ -1585,45 +1585,43 @@ scrollTopBtn.addEventListener('click', () => {
   window.scrollTo({top: 0, behavior: 'smooth'});
 });
 
-// ===== VISITOR COUNTER =====
-(function initVisitorCounter(){
-  const el = document.getElementById('visitorCount');
+// ===== VISITOR COUNTER (Vercount + baseline) =====
+// Vercount 스크립트가 자동으로 #vercount_value_site_uv element를 찾아 카운트를 채웁니다.
+// 이 사이트는 2024년부터 운영되어 왔으므로, 실제 Vercount 카운트에 baseline을 더해 표시합니다.
+(function initVisitorBaseline(){
+  const BASELINE = 443; // 이전 방문 누적 (작년 300+ / 올해 GitHub Insights 14일 143회 기준)
+  const el = document.getElementById('vercount_value_site_uv');
   if (!el) return;
 
-  const NAMESPACE = 'buly-kr';
-  const KEY = 'senior-map';
-  const SESSION_KEY = 'buly_visited_' + new Date().toISOString().slice(0,10);
-  const isNewVisitor = !sessionStorage.getItem(SESSION_KEY);
-
   const format = n => Number(n).toLocaleString('ko-KR');
+  let applied = false;
 
-  // Cache latest count locally as immediate fallback
-  const cached = localStorage.getItem('buly_visitor_count');
-  if (cached) el.textContent = format(cached);
+  const applyBaseline = () => {
+    if (applied) return;
+    // 텍스트에서 숫자만 추출 (Vercount가 이미 값을 넣은 경우)
+    const text = el.textContent.replace(/[^0-9]/g, '');
+    if (text && !isNaN(parseInt(text))) {
+      const vercount = parseInt(text);
+      applied = true;
+      el.textContent = format(vercount + BASELINE);
+    }
+  };
 
-  // Try CountAPI first (public, no signup)
-  const endpoint = isNewVisitor
-    ? `https://api.counterapi.dev/v1/${NAMESPACE}/${KEY}/up`
-    : `https://api.counterapi.dev/v1/${NAMESPACE}/${KEY}`;
+  // Vercount가 값을 넣으면 MutationObserver로 감지
+  const observer = new MutationObserver(applyBaseline);
+  observer.observe(el, { childList: true, characterData: true, subtree: true });
 
-  fetch(endpoint, { cache: 'no-store' })
-    .then(r => r.ok ? r.json() : Promise.reject())
-    .then(data => {
-      const count = data.count ?? data.value;
-      if (typeof count === 'number' && count > 0) {
-        el.textContent = format(count);
-        localStorage.setItem('buly_visitor_count', count);
-        if (isNewVisitor) sessionStorage.setItem(SESSION_KEY, '1');
+  // Fallback: 5초 뒤에도 값이 없으면 baseline만 표시
+  setTimeout(() => {
+    if (!applied) {
+      const text = el.textContent.replace(/[^0-9]/g, '');
+      if (!text || parseInt(text) === 0) {
+        el.textContent = format(BASELINE);
+      } else {
+        applyBaseline();
       }
-    })
-    .catch(() => {
-      // Fallback: use cached value or start count from local baseline
-      if (!cached) {
-        const baseline = 1;
-        el.textContent = format(baseline);
-        localStorage.setItem('buly_visitor_count', baseline);
-      }
-    });
+    }
+  }, 5000);
 })();
 
 // ===== TITLE CLICK: return to home (map tab + scroll top) =====
@@ -1957,5 +1955,8 @@ document.addEventListener('keydown', e => {
 });
 buildGallery();
 </script>
+
+<!-- Vercount 방문자 카운터 -->
+<script defer src="https://events.vercount.one/js"></script>
 </body>
 </html>
